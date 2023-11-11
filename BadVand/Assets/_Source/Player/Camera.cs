@@ -5,10 +5,11 @@ namespace Player
     public class Camera : MonoBehaviour
     {
         [SerializeField] private Transform player;
+        [SerializeField] private float speed;
 
         void Update()
         {
-            transform.position = new Vector3(player.position.x, player.position.y, -8.236691f);
+            transform.Translate(speed * Time.deltaTime, 0, 0);
         }
     }
 }

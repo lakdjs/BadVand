@@ -27,7 +27,10 @@ namespace Player.Movement
 
         public void Jump()
         {
-            _rigidbody.transform.rotation = Quaternion.Euler(0,0,0);
+            Vector3 newRotation = new Vector3(0, 0, 0);
+            _rigidbody.freezeRotation = true;
+            _rigidbody.transform.eulerAngles = newRotation;
+            _rigidbody.freezeRotation = false;
             _rigidbody.AddForce(_rigidbody.transform.up * _jumpForce,ForceMode2D.Impulse);
             OnJumping?.Invoke(_jumpForce);
         }
