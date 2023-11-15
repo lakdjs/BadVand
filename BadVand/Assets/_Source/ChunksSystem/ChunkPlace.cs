@@ -18,8 +18,6 @@ namespace ChunksSystem
 
         private List<Chunk> _spawnedChunks = new List<Chunk>();
         
-        
-
         private void Start()
         {
             _spawnedChunks.Add(firstChunk);
