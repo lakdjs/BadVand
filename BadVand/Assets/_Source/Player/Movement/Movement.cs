@@ -5,8 +5,6 @@ namespace Player.Movement
 {
     public class Movement 
     {
-        public event Action<Vector3> OnMoving; 
-        public event Action<float> OnJumping; 
         
         private float _speed;
         private float _jumpForce;
@@ -19,10 +17,14 @@ namespace Player.Movement
             _rigidbody = rigidbody;
         }
 
-        public void Move(Vector3 input)
+        public void MoveLeft(Vector3 input)
         {
             _rigidbody.AddForce(input * _speed,ForceMode2D.Force);
-            OnMoving?.Invoke(input);
+        }
+
+        public void MoveRight()
+        {
+            _rigidbody.AddForce(Vector2.right * _speed,ForceMode2D.Force);
         }
 
         public void Jump()
@@ -32,7 +34,6 @@ namespace Player.Movement
             _rigidbody.transform.eulerAngles = newRotation;
             _rigidbody.freezeRotation = false;
             _rigidbody.AddForce(_rigidbody.transform.up * _jumpForce,ForceMode2D.Impulse);
-            OnJumping?.Invoke(_jumpForce);
         }
     }
 }

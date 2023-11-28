@@ -1,7 +1,10 @@
+using BonusSystem;
 using InputSystem;
+using LvlSystem;
 using ObstacleSystem;
 using Player.Data;
 using Player.Movement;
+using Player.PlayerCamera;
 using UnityEngine;
 
 namespace Core
@@ -15,22 +18,26 @@ namespace Core
         [SerializeField] private PlayerData playerData;
         [SerializeField] private float speed;
         [SerializeField] private float jumpForce;
+        [SerializeField] private LoseByCamera loseByCamera;
+        [SerializeField] private FinishLvl finishLvl;
         private Game _game;
         private Movement _movement;
-        private MovementController _movementController;
-        
+        private LoseByCamera _loseByCamera;
+        private LVL _lvl;
         private void Awake()
         {
-            _game = new Game();
+            Debug.Log(PlayerPrefs.GetInt("LVL"));
             StartGame();
         }
 
         private void StartGame()
         {
-            obstacleCollisionDetector.Constructor(_game, playerData);
+            _lvl = new LVL(finishLvl);
+            _game = new Game(loseByCamera, obstacleCollisionDetector, _lvl);
+            _game.Bind();
+            obstacleCollisionDetector.Constructor(playerData);
+            _lvl.Bind();
             _movement = new Movement(speed,jumpForce, playerRigidbody);
-            _movementController = new MovementController(_movement, movementView);
-            _movementController.Bind();
             inputListener.Constructor(_movement);
         }
     }
